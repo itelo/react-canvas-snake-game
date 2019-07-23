@@ -110,14 +110,9 @@ const App: React.FC = () => {
     return newFoodPosition;
   };
 
-  const updateFood = React.useCallback(() => {
+  const updateFoodPosition = React.useCallback(() => {
     const newFoodPosition = getNextFoodPosition(snake);
     setFoodPosition(newFoodPosition);
-    if ((foodCounter + 1) % 2 === 0 && !specialFood) {
-      setSpecialFood(true);
-      setSpecialFoodPosition(getRandomPosition(widthCanvas, heightCanvas));
-    }
-    setFoodCounter(foodCounter + 1);
   }, [snake]);
 
   React.useEffect(() => {
@@ -149,19 +144,27 @@ const App: React.FC = () => {
     return [ateFood, ateSpecialFood];
   };
 
+  const tryRenderSpecialFood = React.useCallback(() => {
+    if ((foodCounter + 1) % 2 === 0 && !specialFood) {
+      setSpecialFood(true);
+      setSpecialFoodPosition(getRandomPosition(widthCanvas, heightCanvas));
+    }
+  }, [foodCounter, specialFood, widthCanvas, heightCanvas]);
+
   const updateGame = () => {
     let [ateFood, ateSpecialFood] = updateSnake();
+
     if (ateFood) {
       setPoints(points + speed);
-      updateFood();
+      setFoodCounter(foodCounter + 1);
+      updateFoodPosition();
+      tryRenderSpecialFood();
     }
 
     if (ateSpecialFood) {
       setPoints(points + 181);
       setSpecialFood(false);
     }
-
-    // setSnake(R.map<number, number>(moves[direction])(snake))
   };
 
   // ATUALIZAR POSIÇÃO
