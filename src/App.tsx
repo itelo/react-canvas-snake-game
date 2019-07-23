@@ -1,16 +1,16 @@
 import React, { useCallback } from "react";
 import "./App.css";
 import * as R from "ramda";
-import { useDebouncedCallback } from "use-debounce";
+import { useDirection, Directions } from "./useDirection";
 
 const createTable = (to: number) => R.range(0, to);
 
-enum Directions {
-  UP = "UP",
-  DOWN = "DOWN",
-  LEFT = "LEFT",
-  RIGHT = "RIGHT"
-}
+// enum Directions {
+//   UP = "UP",
+//   DOWN = "DOWN",
+//   LEFT = "LEFT",
+//   RIGHT = "RIGHT"
+// }
 
 const useAnimationFrame = (callback: any) => {
   let callbackRef = React.useRef(callback);
@@ -69,35 +69,9 @@ const App: React.FC = () => {
   const [pixelSize, setPixelSize] = React.useState(20);
   const [snake, setSnake] = React.useState([1]);
 
-  const [direction, setDirection] = React.useState(Directions.LEFT);
+  const [currentDirection, handleKeyPress] = useDirection(Directions.LEFT);
   const updateRate = 1000 / 60;
   const positionUpdateRate = 1000 / 20;
-
-  const keys = {
-    37: (curDir: Directions) =>
-      curDir !== Directions.RIGHT && setDirection(Directions.LEFT),
-    38: (curDir: Directions) =>
-      curDir !== Directions.DOWN && setDirection(Directions.UP),
-    39: (curDir: Directions) =>
-      curDir !== Directions.LEFT && setDirection(Directions.RIGHT),
-    40: (curDir: Directions) =>
-      curDir !== Directions.UP && setDirection(Directions.DOWN)
-  } as {
-    [key: number]: (curDir: Directions) => void;
-  };
-
-  const [handleKeyPress] = useDebouncedCallback(
-    React.useCallback(
-      (keyCode: number) => {
-        console.log(keyCode);
-        if (keys[keyCode]) {
-          keys[keyCode](direction);
-        }
-      },
-      [direction]
-    ),
-    1000 / 20
-  );
 
   React.useEffect(() => {
     const newTable = createTable(widthCanvas * heightCanvas);
@@ -113,9 +87,11 @@ const App: React.FC = () => {
   };
   const moves = {
     UP: (pos: number) =>
-      (pos % widthCanvas) + getNextRow(direction, getRow(pos)) * widthCanvas,
+      (pos % widthCanvas) +
+      getNextRow(currentDirection, getRow(pos)) * widthCanvas,
     DOWN: (pos: number) =>
-      (pos % widthCanvas) + getNextRow(direction, getRow(pos)) * widthCanvas,
+      (pos % widthCanvas) +
+      getNextRow(currentDirection, getRow(pos)) * widthCanvas,
     RIGHT: (pos: number) =>
       ((pos + 1) % widthCanvas) + getRow(pos) * widthCanvas,
     LEFT: (pos: number) =>
@@ -162,7 +138,7 @@ const App: React.FC = () => {
 
     const snakeBody = R.slice(0, snake.length + snakeBodyOffset, snake);
 
-    const newSnakeHead = moves[direction](snakeHead);
+    const newSnakeHead = moves[currentDirection](snakeHead);
     if (snakeBody.includes(newSnakeHead)) {
       alert("MORREU!");
       window.location.reload();
