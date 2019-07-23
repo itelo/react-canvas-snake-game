@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/react-canvas-snake-game/static/css/main.19393e92.chunk.css",
+    "main.js": "/react-canvas-snake-game/static/js/main.8f59976e.chunk.js",
+    "main.js.map": "/react-canvas-snake-game/static/js/main.8f59976e.chunk.js.map",
+    "runtime~main.js": "/react-canvas-snake-game/static/js/runtime~main.78303c1d.js",
+    "runtime~main.js.map": "/react-canvas-snake-game/static/js/runtime~main.78303c1d.js.map",
+    "static/js/2.b74c8ea6.chunk.js": "/react-canvas-snake-game/static/js/2.b74c8ea6.chunk.js",
+    "static/js/2.b74c8ea6.chunk.js.map": "/react-canvas-snake-game/static/js/2.b74c8ea6.chunk.js.map",
+    "index.html": "/react-canvas-snake-game/index.html",
+    "precache-manifest.b8d630562b802b9ddf59004e2d883814.js": "/react-canvas-snake-game/precache-manifest.b8d630562b802b9ddf59004e2d883814.js",
+    "service-worker.js": "/react-canvas-snake-game/service-worker.js",
+    "static/css/main.19393e92.chunk.css.map": "/react-canvas-snake-game/static/css/main.19393e92.chunk.css.map"
+  }
+}
