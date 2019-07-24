@@ -32,6 +32,18 @@ describe("useDirection", () => {
     expect(currentDirection).toBe(Directions.DOWN);
   });
 
+  it("should do nothing when not pressed arrowkeys", () => {
+    const { result } = renderHook(() => useDirection(Directions.UP));
+    expect(result.current[0]).toBe(Directions.UP);
+
+    act(() => {
+      result.current[1](12);
+      jest.runAllTimers();
+    });
+
+    expect(result.current[0]).toBe(Directions.UP);
+  });
+
   describe("direction LEFT should change direction", () => {
     let result: HookResult<[Directions, (keyCode: number) => void]>;
 
