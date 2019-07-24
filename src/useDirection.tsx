@@ -8,6 +8,13 @@ export enum Directions {
   RIGHT = "RIGHT"
 }
 
+export enum KeyCode {
+  UP = 38,
+  DOWN = 40,
+  LEFT = 37,
+  RIGHT = 39
+}
+
 export function useDirection(
   initialDirection: Directions,
   debounceTime = 1000 / 20
@@ -16,13 +23,13 @@ export function useDirection(
 
   const keys = React.useMemo(
     () => ({
-      37: (curDir: Directions) =>
+      [KeyCode.LEFT]: (curDir: Directions) =>
         curDir !== Directions.RIGHT && setDirection(Directions.LEFT),
-      38: (curDir: Directions) =>
+      [KeyCode.UP]: (curDir: Directions) =>
         curDir !== Directions.DOWN && setDirection(Directions.UP),
-      39: (curDir: Directions) =>
+      [KeyCode.RIGHT]: (curDir: Directions) =>
         curDir !== Directions.LEFT && setDirection(Directions.RIGHT),
-      40: (curDir: Directions) =>
+      [KeyCode.DOWN]: (curDir: Directions) =>
         curDir !== Directions.UP && setDirection(Directions.DOWN)
     }),
     []
@@ -33,7 +40,6 @@ export function useDirection(
   const [handleKeyPress] = useDebouncedCallback(
     React.useCallback(
       (keyCode: number) => {
-        console.log(keyCode);
         if (keys[keyCode]) {
           keys[keyCode](direction);
         }
