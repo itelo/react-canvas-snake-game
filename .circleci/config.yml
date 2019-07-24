@@ -37,3 +37,7 @@ jobs:
       - run: yarn test --collectCoverage=true
       - store_artifacts:
           path: coverage
+
+notify:
+  webhooks:
+    - url: https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN
