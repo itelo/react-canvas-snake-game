@@ -41,5 +41,4 @@ jobs:
           path: coverage
 
       - codecov/upload:
-          file: coverage/clover.xml
-          file: coverage/lcov.info
+          file: coverage
