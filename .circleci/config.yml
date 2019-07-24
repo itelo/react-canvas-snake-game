@@ -42,4 +42,5 @@ jobs:
 
       - codecov/upload:
           file: coverage/clover.xml
+      - codecov/upload:
           file: coverage/lcov.info
