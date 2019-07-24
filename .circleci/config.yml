@@ -36,11 +36,4 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: yarn test --collectCoverage=true --watchAll=false
-      - store_artifacts:
-          path: coverage
-
-      - codecov/upload:
-          file: coverage/clover.xml
-      - codecov/upload:
-          file: coverage/lcov.info
+      - run: yarn test --collectCoverage=true --watchAll=false && ./node_modules/.bin/codecov
